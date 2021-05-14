@@ -1,0 +1,134 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="obt_bi.list">
+      <field name="name">Seguimiento Terneros</field>
+      <field name="model">obt_bi</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="obt_bi.action_tracing_terneros">
+      <field name="name">Seguimiento Terneros</field>
+      <field name="res_model">obt_bi</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- TERNEROS -->
+
+    <record model="ir.ui.view" id="obt_bi.list">
+      <field name="name">Terneros</field>
+      <field name="model">obt_bi_cow</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="number"/>
+          <field name="create_date"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="obt_bi.action_terneros">
+      <field name="name">Terneros</field>
+      <field name="res_model">obt_bi_cow</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- UNIDADES DE NEGOCIO -->
+
+    <record model="ir.ui.view" id="obt_bi.list_unidades_negocio">
+      <field name="name">Unidades de Negocio</field>
+      <field name="model">obt_bi_unidades_negocio</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="obt_bi.action_unidades_negocio">
+      <field name="name">Unidades de Negocio</field>
+      <field name="res_model">obt_bi_unidades_negocio</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- INFORMES -->
+
+    <record model="ir.ui.view" id="obt_bi.list_config">
+      <field name="name">Unidades de Negocio</field>
+      <field name="model">obt_bi_informe</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="obt_bi.action_informe">
+      <field name="name">Unidades de Negocio</field>
+      <field name="res_model">obt_bi_informe</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <!-- CONFIGURACION -->
+
+    <record model="ir.ui.view" id="obt_bi.list_config">
+      <field name="name">Configuracion</field>
+      <field name="model">obt_bi_config</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="obt_bi.action_config">
+      <field name="name">Configuracion</field>
+      <field name="res_model">obt_bi_config</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+   
+
+    <!-- Top menu item -->
+    <menuitem name="OBT BI" id="obt_bi.menu_obt_root"/>
+    <!-- menu categories -->
+
+    <menuitem name="Seguimiento Terneros" id="obt_bi.obt_segumiento" parent="obt_bi.menu_obt_root"/>
+    <menuitem name="Terneros" id="obt_bi.menu_obt_tenernos" parent="obt_bi.menu_obt_root"/>
+    <menuitem name="Unidades de Negocio" id="obt_bi.menu_obt_unidades_negocio" parent="obt_bi.menu_obt_root"/>
+    <menuitem name="Clientes" id="obt_bi.menu_obt_clientes" parent="obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+    <menuitem name="Proveedores" id="obt_bi.menu_obt_proveedores" parent="obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+    <menuitem name="Informes" id="obt_bi.menu_obt_informes" parent="obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+
+    <menuitem name="Configuración" id="obt_bi.menu_obt_config" parent="obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+    <!-- actions -->
+    <menuitem name="Terneros" id="obt_bi.menu_list_terneros" parent="obt_bi.menu_obt_tenernos"
+              action="obt_bi.action_terneros"/>
+
+    <menuitem name="Unidades de Negocio" id="obt_bi.menu_list_unidades_negocio" parent="obt_bi.menu_obt_unidades_negocio"
+              action="obt_bi.action_unidades_negocio"/>
+
+    <menuitem name="Segumiento de Peso" id="obt_bi.menu_list_informe_1" parent="obt_bi.menu_obt_informes"
+              action="obt_bi.action_informe"/>
+
+    <menuitem name="Clase Unidades de Negocio" id="obt_bi.menu_list_config_1" parent="obt_bi.menu_obt_config"
+              action="obt_bi.action_config"/>
+  
+    
+  </data>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_obt_bi,obt_bi.obt_bi,model_obt_bi,,1,1,1,1
+access_obt_bi_cow,obt_bi.obt_bi_cow,model_obt_bi_cow,,1,1,1,1
+access_obt_bi_unidades_negocio,obt_bi.obt_bi_unidades_negocio,model_obt_bi_unidades_negocio,,1,1,1,1
+access_obt_bi_informe,obt_bi.obt_bi_informe,model_obt_bi_informe,,1,1,1,1
+access_obt_bi_config,obt_bi.obt_bi_config,model_obt_bi_config,,1,1,1,1
