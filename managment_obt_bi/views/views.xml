@@ -1,0 +1,407 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="managment_obt_bi.list">
+      <field name="name">Seguimiento Terneros</field>
+      <field name="model">managment_obt_bi_tracing</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="unidad_negocio_id"/>
+          <field name="date_ingreso"/>
+          <field name="date_sale"/>
+          <field name="state"/>
+
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="managment_obt_bi.form_mamanagment_obt_bi_form">
+        <field name="name">form_mamanagment_obt_bi.form</field>
+        <field name="model">managment_obt_bi_tracing</field>
+        <field name="arch" type="xml">
+            <form string="Seguimiento de Prodccion Terneros">
+                <header>
+                  <field name="state" widget="statusbar" statusbar_visible="engorde,corral_engorde,sale"/>
+
+                </header>
+                <sheet>
+                  <group>
+                    <group>
+                        <!--<field name="sequence" widget="handle" />-->
+
+                        <field name="name"/>
+                        <field name="unidad_negocio_id"/>
+                        <field name="date_ingreso"/>
+                        <field name="date_sale"/>
+                        <field name="dias_engorde"/>
+                    </group>
+
+                    <group col="4" string="Cantidad de Terneros">
+                     <field name="cant_cow_ids" widget="one2many_list" nolabel="1">
+
+                          <form>
+                              <field name="unidad_negocio_id"/>
+                              <field name="raza_ternero_id"/>                              
+                              <field name="cantidad"/>
+
+                          </form>
+                          <tree  editable="bottom">
+                              <field name="unidad_negocio_id"/>
+                              <field name="raza_ternero_id"/>                              
+                              <field name="cantidad" sum="Total"/>
+                          </tree>
+
+                        </field>
+                      </group>
+
+                    <group  string="Control de Peso">
+                   
+                     <field name="weight_cow_ids" widget="one2many_list"  nolabel="1">
+                        <h1>Titulo</h1>
+                          <form>
+                              <field name="date_peso"/>
+                              <field name="total_weight"/>
+
+                          </form>
+                          <tree  editable="bottom">
+                              <field name="date_peso"/>
+                              <field name="total_weight" sum="Total"/>
+                              
+                          </tree>
+
+                        </field>
+
+                      </group>
+
+                    <group  string="Gastos" >
+                     <field name="cost_cow_ids" widget="one2many_list" nolabel="1">
+
+                          <form>
+                              <field name="unidad_negocio_id"/>
+                              <field name="amount_cost"/>
+                              <field name="date_operations"/>
+                              <field name="description"/>
+
+
+                          </form>
+                          <tree  editable="bottom" string="Sales Order Lines">
+                              <field name="unidad_negocio_id"/>
+                              <field name="amount_cost" sum="Total"/>
+                              <field name="date_operations"/>
+                              <field name="description"/>
+
+                              
+                          </tree>
+
+                        </field>
+
+                      </group>
+
+
+                    <group  string="Trasnferencias de Unidades" >
+                     <field name="transfer_cow_ids" widget="one2many_list" nolabel="1">
+
+                          <form>
+                              <field name="unidad_negocio_id_origen"/>
+                              <field name="unidad_negocio_id_destino"/>
+                              <field name="cantidad"/>
+                              <field name="date_operations"/>
+
+                          </form>
+                          <tree  editable="bottom" string="Sales Order Lines">
+                              <field name="unidad_negocio_id_origen"/>
+                              <field name="unidad_negocio_id_destino" sum="Total"/>
+                              <field name="cantidad"/>
+                              <field name="date_operations"/>
+                          </tree>
+
+                        </field>
+
+                      </group>
+                      
+
+                  </group>
+                </sheet>
+               <!--<div class="oe_chatter">
+                      <field name="message_follower_ids" groups="base.group_user"/>
+                      <field name="activity_ids"/>
+                      <field name="message_ids"/>
+               </div>-->
+            </form>
+        </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_tracing_terneros">
+      <field name="name">Seguimiento Terneros</field>
+      <field name="res_model">managment_obt_bi_tracing</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- TERNEROS -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_cow">
+      <field name="name">Terneros</field>
+      <field name="model">managment_obt_bi_cow</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="number"/>
+          <field name="create_date"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_terneros">
+      <field name="name">Terneros</field>
+      <field name="res_model">managment_obt_bi_cow</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <!-- UNIDADES DE NEGOCIO -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_unidades_negocio">
+      <field name="name">Unidades de Negocio</field>
+      <field name="model">managment_obt_bi_unidades_negocio</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="class_id"/>
+          <field name="sub_class_id"/>
+         
+
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="managment_obt_bi.form_unidades_negocio">
+        <field name="name">Unidades de Negocio</field>
+        <field name="model">managment_obt_bi_unidades_negocio</field>
+        <field name="arch" type="xml">
+            <form string="description">
+                <header>
+                </header>
+                <sheet>
+                  
+                    <group>  
+                          <field name="class_id"/>
+                          <field name="name"/>
+                          <field name="sub_class_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_unidades_negocio">
+      <field name="name">Unidades de Negocio</field>
+      <field name="res_model">managment_obt_bi_unidades_negocio</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <!-- INFORMES -->
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_cost">
+            <field name="name">managment_cost_graph</field>
+            <field name="model">managment_cost</field>
+            <field name="arch" type="xml">
+                <graph string="Seguimiento de engorde">
+                    <field name="amount_cost"/>
+                    <field name="unidad_de_negocio" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_cost">
+            <field name="name">managment_cost_pivot</field>
+            <field name="model">managment_cost</field>
+            <field name="arch" type="xml">
+                <pivot string="Seguimiento de engorde">
+                    <field name="amount_cost" type="row"/>
+                    <field name="unidad_de_negocio" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_informe_gatos">
+      <field name="name">Informe Gastos</field>
+      <field name="res_model">managment_cost</field>
+      <field name="view_mode">pivot,graph</field>
+    </record>
+
+<!-- Pesos-->
+    <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_weight_cow">
+            <field name="name">managment_weight_cow_graph</field>
+            <field name="model">managment_weight_cow</field>
+            <field name="arch" type="xml">
+                <graph string="Seguimiento de engorde">
+                    <field name="date_peso"/>
+                    <field name="total_weight" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_weight_cow">
+            <field name="name">managment_cost_pivot</field>
+            <field name="model">managment_weight_cow</field>
+            <field name="arch" type="xml">
+                <pivot string="Seguimiento de engorde">
+                    <field name="date_peso" type="row"/>
+                    <field name="total_weight" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_informe_weight">
+      <field name="name">Informe Peso</field>
+      <field name="res_model">managment_weight_cow</field>
+      <field name="view_mode">pivot,graph</field>
+    </record>
+
+
+
+  <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_obt_bi_tracing">
+            <field name="name">managment_obt_bi_tracing_graph</field>
+            <field name="model">managment_obt_bi_tracing</field>
+            <field name="arch" type="xml">
+                <graph string="Seguimiento de engorde">
+                    <field name="unidad_negocio_id"/>
+                    <field name="dias_engorde" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_obt_bi_tracing">
+            <field name="name">managment_obt_bi_tracing_pivot</field>
+            <field name="model">managment_obt_bi_tracing</field>
+            <field name="arch" type="xml">
+                <pivot string="Seguimiento de engorde">
+                    <field name="unidad_negocio_id" type="row"/>
+                    <field name="dias_engorde" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_informe">
+      <field name="name">Informe</field>
+      <field name="res_model">managment_obt_bi_tracing</field>
+      <field name="view_mode">pivot,graph</field>
+    </record>
+
+
+    <!-- CLASE -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_config_clase">
+      <field name="name">Unidades de Negocio Clase</field>
+      <field name="model">managment_obt_bi_unidades_negocio_clase</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="managment_obt_bi.managment_obt_bi_unidades_negocio_clase">
+      <field name="name">Unidades de Negocio Clase</field>
+      <field name="res_model">managment_obt_bi_unidades_negocio_clase</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+<!-- SUB CLASE -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_config_sub_clase">
+      <field name="name">Unidades de Negocio Sub Clase</field>
+      <field name="model">managment_obt_bi_unidades_negocio_sub_clase</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="sub_clase"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="managment_obt_bi.managment_obt_bi_unidades_negocio_sub_clase">
+      <field name="name">Unidades de Negocio Sub Clase</field>
+      <field name="res_model">managment_obt_bi_unidades_negocio_sub_clase</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+<!-- CATEGORIA -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_config_sub_categoria">
+      <field name="name">Unidades de Negocio Categoria</field>
+      <field name="model">managment_obt_bi_unidades_negocio_categoria</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="managment_obt_bi.managment_obt_bi_unidades_negocio_categoria">
+      <field name="name">Unidades de Negocio Categoria</field>
+      <field name="res_model">managment_obt_bi_unidades_negocio_categoria</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+   
+
+    <!-- Top menu item -->
+    <menuitem name="OBT BI" id="managment_obt_bi.menu_obt_root" action="managment_obt_bi.action_tracing_terneros" sequence="1"/>
+    <!-- menu categories -->
+
+    <!--<menuitem name="Seguimiento Terneros" id="managment_obt_bi.obt_segumiento" parent="managment_obt_bi.menu_obt_root"/>-->
+    <menuitem name="Terneros" id="managment_obt_bi.menu_obt_tenernos" parent="managment_obt_bi.menu_obt_root" action="managment_obt_bi.action_terneros"/>
+    <menuitem name="Unidades de Negocio" id="managment_obt_bi.menu_obt_unidades_negocio" parent="managment_obt_bi.menu_obt_root"  action="managment_obt_bi.action_unidades_negocio"/>
+    <menuitem name="Clientes" id="managment_obt_bi.menu_obt_clientes" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+    <menuitem name="Proveedores" id="managment_obt_bi.menu_obt_proveedores" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+    <menuitem name="Informes" id="managment_obt_bi.menu_obt_informes" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+
+
+
+    <menuitem name="Configuración" id="managment_obt_bi.menu_obt_config" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+
+    <!-- actions -->
+    <menuitem name="Segumiento" id="managment_obt_bi.menu_list_informe_1" parent="managment_obt_bi.menu_obt_informes"
+              action="managment_obt_bi.action_informe"/>
+    <menuitem name="Segumiento de Gastos" id="managment_obt_bi.menu_list_informe_2" parent="managment_obt_bi.menu_obt_informes"
+              action="managment_obt_bi.action_informe_gatos"/>
+    <menuitem name="Segumiento de Peso" id="managment_obt_bi.menu_list_informe_3" parent="managment_obt_bi.menu_obt_informes"
+              action="managment_obt_bi.action_informe_weight"/>
+
+
+    <menuitem name="Clase Unidades de Negocio" id="managment_obt_bi.menu_list_config_clase" parent="managment_obt_bi.menu_obt_config"
+              action="managment_obt_bi.managment_obt_bi_unidades_negocio_clase"/>
+  
+   <menuitem name="Sub Clase Unidades de Negocio" id="managment_obt_bi.menu_list_config_sub_clase" parent="managment_obt_bi.menu_obt_config"
+              action="managment_obt_bi.managment_obt_bi_unidades_negocio_sub_clase"/>
+
+   <menuitem name="Categoria Unidades de Negocio" id="managment_obt_bi.menu_list_config_categoria" parent="managment_obt_bi.menu_obt_config"
+              action="managment_obt_bi.managment_obt_bi_unidades_negocio_categoria"/>
+  
+  
+    
+  </data>
+</odoo>
