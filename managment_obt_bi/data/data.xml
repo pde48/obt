@@ -10,24 +10,9 @@
             <field name="name">DEMO TER-002</field>
             <field name="number">0000002</field>
         </record>
-
         <record id="tern_003" model="managment_obt_bi_cow">
             <field name="name">DEMO TER-003</field>
             <field name="number">0000003</field>
         </record>
-
-
-        <record id="class_001" model="managment_obt_bi_unidades_negocio_clase">
-            <field name="code">100</field>
-            <field name="name">100</field>
-        </record>
-
-
-        <record id="unidades_001" model="managment_obt_bi_unidades_negocio">
-            <field name="name">DEMO FEDLOT COLONIA</field>
-            <field name="class_id">0000003</field>
-            <field name="sub_class_id">0000003</field>
-        </record>
-
     </data>
 </odoo>
