@@ -12,10 +12,9 @@
     'website': "http://www.obt.com",
     'category': 'Purchase',
     'version': '0.1',
-    'depends': ['base','contacts',],
-    # always loaded
+    'depends': ['base_setup','utm','mail','contacts','portal',],
     'data': [
-       'data/data.xml',
+        'data/data.xml',
         'security/ir.model.access.csv',
         'views/views.xml',
     ],

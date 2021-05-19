@@ -2,14 +2,13 @@
   <data>
     <!-- explicit list view definition -->
     <record model="ir.ui.view" id="managment_obt_bi.list">
-      <field name="name">Seguimiento Terneros</field>
+      <field name="name">Registros de Compra Terneros</field>
       <field name="model">managment_obt_bi_tracing</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
           <field name="unidad_negocio_id"/>
-          <field name="date_ingreso"/>
-          <field name="date_sale"/>
+        
           <field name="state"/>
 
         </tree>
@@ -21,124 +20,51 @@
         <field name="name">form_mamanagment_obt_bi.form</field>
         <field name="model">managment_obt_bi_tracing</field>
         <field name="arch" type="xml">
-            <form string="Seguimiento de Prodccion Terneros">
+            <form string="Registro de Compra de Terneros">
                 <header>
                   <field name="state" widget="statusbar" statusbar_visible="engorde,corral_engorde,sale"/>
-
+                 
                 </header>
                 <sheet>
-                  <group>
-                    <group>
+                  <group string="Registro de Compra" >
+                    <group >
                         <!--<field name="sequence" widget="handle" />-->
 
                         <field name="name"/>
+                        <field name="number"/>
                         <field name="unidad_negocio_id"/>
-                        <field name="date_ingreso"/>
-                        <field name="date_sale"/>
-                        <field name="dias_engorde"/>
-                    </group>
-
-                    <group col="4" string="Cantidad de Terneros">
-                     <field name="cant_cow_ids" widget="one2many_list" nolabel="1">
-
-                          <form>
-                              <field name="unidad_negocio_id"/>
-                              <field name="raza_ternero_id"/>                              
-                              <field name="cantidad"/>
-
-                          </form>
-                          <tree  editable="bottom">
-                              <field name="unidad_negocio_id"/>
-                              <field name="raza_ternero_id"/>                              
-                              <field name="cantidad" sum="Total"/>
-                          </tree>
-
-                        </field>
-                      </group>
-
-                    <group  string="Control de Peso">
-                   
-                     <field name="weight_cow_ids" widget="one2many_list"  nolabel="1">
-                        <h1>Titulo</h1>
-                          <form>
-                              <field name="date_peso"/>
-                              <field name="total_weight"/>
-
-                          </form>
-                          <tree  editable="bottom">
-                              <field name="date_peso"/>
-                              <field name="total_weight" sum="Total"/>
-                              
-                          </tree>
-
-                        </field>
-
-                      </group>
-
-                    <group  string="Gastos" >
-                     <field name="cost_cow_ids" widget="one2many_list" nolabel="1">
-
-                          <form>
-                              <field name="unidad_negocio_id"/>
-                              <field name="amount_cost"/>
-                              <field name="date_operations"/>
-                              <field name="description"/>
-
-
-                          </form>
-                          <tree  editable="bottom" string="Sales Order Lines">
-                              <field name="unidad_negocio_id"/>
-                              <field name="amount_cost" sum="Total"/>
-                              <field name="date_operations"/>
-                              <field name="description"/>
-
-                              
-                          </tree>
-
-                        </field>
-
-                      </group>
-
-
-                    <group  string="Trasnferencias de Unidades" >
-                     <field name="transfer_cow_ids" widget="one2many_list" nolabel="1">
-
-                          <form>
-                              <field name="unidad_negocio_id_origen"/>
-                              <field name="unidad_negocio_id_destino"/>
-                              <field name="cantidad"/>
-                              <field name="date_operations"/>
-
-                          </form>
-                          <tree  editable="bottom" string="Sales Order Lines">
-                              <field name="unidad_negocio_id_origen"/>
-                              <field name="unidad_negocio_id_destino" sum="Total"/>
-                              <field name="cantidad"/>
-                              <field name="date_operations"/>
-                          </tree>
-
-                        </field>
-
-                      </group>
-                      
+                        <field name="pricing_purchase"/>
+                        <field name="date_purchase"/>
+                        <field name="weight_purchase"/>               
+                        <field name="supplier_id"/>
+                    </group>                   
 
                   </group>
+
+                     <group >
+
+                      <field name="notes_purchase"/>
+
+                     </group>
+
                 </sheet>
-               <!--<div class="oe_chatter">
+               <div class="oe_chatter">
                       <field name="message_follower_ids" groups="base.group_user"/>
                       <field name="activity_ids"/>
-                      <field name="message_ids"/>
-               </div>-->
+                      <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+               </div>
             </form>
         </field>
     </record>
 
 
+
+
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="managment_obt_bi.action_tracing_terneros">
-      <field name="name">Seguimiento Terneros</field>
+      <field name="name">Compra de Terneros</field>
       <field name="res_model">managment_obt_bi_tracing</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,pivot,graph</field>
     </record>
 
     <!-- TERNEROS -->
@@ -150,17 +76,100 @@
         <tree>
           <field name="name"/>
           <field name="number"/>
+          <field name="unidad_negocio_id"/>
+          <field name="supplier_id"/>
+          <field name="state"/>
           <field name="create_date"/>
-          
         </tree>
       </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="managment_obt_bi.form_managment_obt_bi_cow_form">
+        <field name="name">form_managment_obt_bi_cow.form</field>
+        <field name="model">managment_obt_bi_cow</field>
+        <field name="arch" type="xml">
+            <form string="Terneros">
+                <header>
+
+                  <field name="state" widget="statusbar" statusbar_visible="ingreso,cria_engorde,sale" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                  <div class="oe_button_box" name="button_box">
+                     <button class="oe_stat_button" name="button_1" type="object" icon="fa-bars">
+                      <div class="o_field_widget o_stat_info">
+                          <span class="o_stat_text"><field name="order_count1"/></span>
+                          <span class="o_stat_text">Compras</span>
+                      </div>
+                  </button>
+
+                  <button class="oe_stat_button" name="button_2" type="object" icon="fa-dollar">
+                      <div class="o_field_widget o_stat_info">
+                          <span class="o_stat_text"><field name="order_count2"/></span>
+                          <span class="o_stat_text">Gastos Unidad Negocio</span>
+                      </div>
+                  </button>
+
+                   <button class="oe_stat_button" name="button_3" type="object" icon="fa-dollar">
+                      <div class="o_field_widget o_stat_info">
+                          <span class="o_stat_text"><field name="order_count3"/></span>
+                          <span class="o_stat_text">Gastos Directos</span>
+                      </div>
+                  </button>
+
+                </div>
+                  <group string="Seguimiento Ternero" >
+                    <group  >
+                        <field name="name" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                        <field name="number" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                        <field name="unidad_negocio_id" readonly="True" force_save="1" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                        <field name="pricing_purchase" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                        <field name="date_purchase" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                        <field name="weight_purchase" readonly="True" force_save="1" attrs="{'readonly': [('state', '=', 'sale')]}"/> 
+                        <field name="weight_actuality" attrs="{'readonly': [('state', '=', 'sale')]}"/>                      
+                        <field name="supplier_id" attrs="{'readonly': [('state', '=', 'sale')]}"/>
+                              
+                        
+                    </group> 
+
+                     <group attrs="{'invisible': [('state', '!=', 'sale')]}">
+                        <field name="date_sale" attrs="{'required': [('state', '=', 'sale')]}"/>
+                        <field name="weight_sale" attrs="{'required': [('state', '=', 'sale')]}"/>
+                        <field name="pricing_sale" attrs="{'required': [('state', '=', 'sale')]}"/>
+                        
+                     </group>
+
+                    
+                
+
+                  </group>
+
+                  <group>
+                      <field name="trasnfer_ids" widget="one2many_list">
+                        <tree create="false" delete="false">
+                            <field name="unidad_negocio_id_origen"/>
+                            <field name="unidad_negocio_id_destino"/>
+                            <field name="date_operations"/>
+                            <field name="weight"/>
+                        </tree>
+
+                      </field>
+                  </group>
+                </sheet>
+               <div class="oe_chatter">
+                      <field name="message_follower_ids" groups="base.group_user"/>
+                      <field name="activity_ids"/>
+                      <field name="message_ids"/>
+               </div>
+            </form>
+        </field>
     </record>
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="managment_obt_bi.action_terneros">
       <field name="name">Terneros</field>
       <field name="res_model">managment_obt_bi_cow</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,pivot,graph</field>
     </record>
 
 
@@ -172,10 +181,11 @@
       <field name="name">Unidades de Negocio</field>
       <field name="model">managment_obt_bi_unidades_negocio</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree >
           <field name="name"/>
           <field name="class_id"/>
           <field name="sub_class_id"/>
+          <field name="category_id"/>
          
 
         </tree>
@@ -190,12 +200,12 @@
                 <header>
                 </header>
                 <sheet>
-                  
                     <group>  
-                          <field name="class_id"/>
-                          <field name="name"/>
-                          <field name="sub_class_id"/>
-                    </group>
+                        <field name="name"/>
+                        <field name="class_id"/>
+                        <field name="sub_class_id"/>
+                        <field name="category_id"/>
+                  </group>
                 </sheet>
             </form>
         </field>
@@ -209,18 +219,204 @@
     </record>
 
 
+  <!-- Movimientos de unidades-->
+    <record model="ir.ui.view" id="managment_obt_bi.list_tracing_tranfer">
+      <field name="name">Traslados o Movimientos de Terneros</field>
+      <field name="model">managment_tranfer</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="cow_id" attrs="{'readonly':[('state','=','done')]}"/>
+          <field name="unidad_negocio_id_origen" attrs="{'readonly':[('state','=','done')]}"/>
+          <field name="unidad_negocio_id_destino" attrs="{'readonly':[('state','=','done')]}"/>
+          <field name="date_operations" attrs="{'readonly':[('state','=','done')]}"/>
+          <field name="weight" attrs="{'readonly':[('state','=','done')]}"/>    
+          <field name="state" attrs="{'readonly':[('state','=','done')]}"/>                 
+
+        </tree>
+      </field>
+    </record>
 
 
-    <!-- INFORMES -->
+     <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_tranfer">
+            <field name="name">managment_tranfer_graph</field>
+            <field name="model">managment_tranfer</field>
+            <field name="arch" type="xml">
+                <graph string="Registro de Gastos">
+                    <field name="cow_id"/>
+                    <field name="unidad_negocio_id_origen" type="measure"/>
+                </graph>
+            </field>
+        </record>
 
 
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_tranfer">
+            <field name="name">managment_tranfer_pivot</field>
+            <field name="model">managment_tranfer</field>
+            <field name="arch" type="xml">
+                <pivot string="Registro de Gastos">
+                    <field name="unidad_negocio_id_origen" type="row"/>
+                    <field name="cow_id" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_managment_tranfer">
+      <field name="name">Traslados o Movimientos de Terneros</field>
+      <field name="res_model">managment_tranfer</field>
+      <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+
+  <!-- Registro de Gastos Empresa -->
+    
+    <record model="ir.ui.view" id="managment_obt_bi.list_tracing_expenses_company">
+      <field name="name">Registro de Gastos Empresa</field>
+      <field name="model">managment_obt_bi_expenses_company</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="gasto_id"/>
+          <field name="date_operations"/>
+          <field name="amount" sum="Total"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_obt_bi_expenses_company">
+            <field name="name">managment_obt_bi_expenses_company_graph</field>
+            <field name="model">managment_obt_bi_expenses_company</field>
+            <field name="arch" type="xml">
+                <graph string="Registro de Gastos">
+                    <field name="gasto_id"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_obt_bi_expenses_company">
+            <field name="name">managment_obt_bi_expenses_company_pivot</field>
+            <field name="model">managment_obt_bi_expenses_company</field>
+            <field name="arch" type="xml">
+                <pivot string="Registro de Gastos">
+                    <field name="amount" type="row"/>
+                    <field name="gasto_id" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_tracing_expenses_company">
+      <field name="name">Registro de Gastos Empresa</field>
+      <field name="res_model">managment_obt_bi_expenses_company</field>
+      <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+
+  <!-- Registro de Gastos Directos -->
+    
+    <record model="ir.ui.view" id="managment_obt_bi.list_tracing_expenses_cow">
+      <field name="name">Registro de Gastos Directos</field>
+      <field name="model">managment_tracing_obt_bi_expenses_cow</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="managment_transfer_obt_bi_id"/>
+          <field name="gasto_id"/>
+          <field name="date_operations"/>
+          <field name="amount" sum="Total"/>         
+        </tree>
+      </field>
+    </record>
+
+      <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_tracing_obt_bi_expenses_cow">
+            <field name="name">managment_tracing_obt_bi_expenses_cow_graph</field>
+            <field name="model">managment_tracing_obt_bi_expenses_cow</field>
+            <field name="arch" type="xml">
+                <graph string="Registro de Gastos">
+                    <field name="managment_transfer_obt_bi_id"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_tracing_obt_bi_expenses_cow">
+            <field name="name">managment_tracing_obt_bi_expenses_pivot</field>
+            <field name="model">managment_tracing_obt_bi_expenses_cow</field>
+            <field name="arch" type="xml">
+                <pivot string="Registro de Gastos">
+                    <field name="amount" type="row"/>
+                    <field name="managment_transfer_obt_bi_id" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_tracing_expenses_cow">
+      <field name="name">Registro de Gastos</field>
+      <field name="res_model">managment_tracing_obt_bi_expenses_cow</field>
+      <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+  <!-- Registro de Gastos-->
+    
+    <record model="ir.ui.view" id="managment_obt_bi.list_tracing_expenses">
+      <field name="name">Registro de Gastos</field>
+      <field name="model">managment_tracing_obt_bi_expenses</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="gasto_id"/>
+          <field name="unidad_negocio_id"/>
+          <field name="date_operations"/>
+          <field name="amount" sum="Total"/>         
+
+        </tree>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_tracing_obt_bi_expenses">
+            <field name="name">managment_tracing_obt_bi_expenses_graph</field>
+            <field name="model">managment_tracing_obt_bi_expenses</field>
+            <field name="arch" type="xml">
+                <graph string="Registro de Gastos">
+                    <field name="unidad_negocio_id"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="managment_obt_bi.view_pivot_managment_tracing_obt_bi_expenses">
+            <field name="name">managment_tracing_obt_bi_expenses_pivot</field>
+            <field name="model">managment_tracing_obt_bi_expenses</field>
+            <field name="arch" type="xml">
+                <pivot string="Registro de Gastos">
+                    <field name="amount" type="row"/>
+                    <field name="unidad_negocio_id" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="managment_obt_bi.action_tracing_expenses">
+      <field name="name">Registro de Gastos</field>
+      <field name="res_model">managment_tracing_obt_bi_expenses</field>
+      <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+
+  <!-- INFORMES -->
         <record model="ir.ui.view" id="managment_obt_bi.view_graph_managment_cost">
             <field name="name">managment_cost_graph</field>
             <field name="model">managment_cost</field>
             <field name="arch" type="xml">
                 <graph string="Seguimiento de engorde">
                     <field name="amount_cost"/>
-                    <field name="unidad_de_negocio" type="measure"/>
+                    <field name="unidad_negocio_id" type="measure"/>
                 </graph>
             </field>
         </record>
@@ -232,7 +428,7 @@
             <field name="arch" type="xml">
                 <pivot string="Seguimiento de engorde">
                     <field name="amount_cost" type="row"/>
-                    <field name="unidad_de_negocio" type="measure"/>
+                    <field name="unidad_negocio_id" type="measure"/>
                 </pivot>
             </field>
         </record>
@@ -364,24 +560,71 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-   
+    <!-- GASTOS -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_config_gastos">
+      <field name="name">Gastos</field>
+      <field name="model">managment_obt_bi_expenses</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="managment_obt_bi.managment_obt_bi_gastos_act">
+      <field name="name">Gastos</field>
+      <field name="res_model">managment_obt_bi_expenses</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+     <!-- TIPOS GASTOS -->
+
+    <record model="ir.ui.view" id="managment_obt_bi.list_config_type_gastos">
+      <field name="name">Tipo de  Gastos</field>
+      <field name="model">managment_obt_bi_type_expenses</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="managment_obt_bi.managment_obt_bi_gastos_type_act">
+      <field name="name">Tipo de Gastos</field>
+      <field name="res_model">managment_obt_bi_type_expenses</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  
 
     <!-- Top menu item -->
-    <menuitem name="OBT BI" id="managment_obt_bi.menu_obt_root" action="managment_obt_bi.action_tracing_terneros" sequence="1"/>
+    <menuitem name="OBT BI" id="managment_obt_bi.menu_obt_root" action="managment_obt_bi.action_terneros" sequence="1"/>
     <!-- menu categories -->
 
-    <!--<menuitem name="Seguimiento Terneros" id="managment_obt_bi.obt_segumiento" parent="managment_obt_bi.menu_obt_root"/>-->
-    <menuitem name="Terneros" id="managment_obt_bi.menu_obt_tenernos" parent="managment_obt_bi.menu_obt_root" action="managment_obt_bi.action_terneros"/>
-    <menuitem name="Unidades de Negocio" id="managment_obt_bi.menu_obt_unidades_negocio" parent="managment_obt_bi.menu_obt_root"  action="managment_obt_bi.action_unidades_negocio"/>
-    <menuitem name="Clientes" id="managment_obt_bi.menu_obt_clientes" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
-    <menuitem name="Proveedores" id="managment_obt_bi.menu_obt_proveedores" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+    <menuitem name="Operaciones" id="managment_obt_bi.obt_oper1" parent="managment_obt_bi.menu_obt_root"  sequence="2"/>
 
-    <menuitem name="Informes" id="managment_obt_bi.menu_obt_informes" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+    <!--<menuitem name="Terneros" id="managment_obt_bi.menu_obt_tenernos" parent="managment_obt_bi.obt_oper1" action="managment_obt_bi.action_terneros"/>-->
 
+    <menuitem name="Compra de Terneros" id="managment_obt_bi.menu_obt_purchase_tenernos" parent="managment_obt_bi.obt_oper1" action="managment_obt_bi.action_tracing_terneros" sequence="1"/>
 
+    <menuitem name="Unidades de Negocio" id="managment_obt_bi.menu_obt_unidades_negocio" parent="managment_obt_bi.obt_oper1"  action="managment_obt_bi.action_unidades_negocio" sequence="2"/>
 
+    <menuitem name="Gastos de Unidad de Negocios" id="managment_obt_bi.menu_obt_tr_expenses" parent="managment_obt_bi.obt_oper1"  action="managment_obt_bi.action_tracing_expenses" sequence="3"/>
 
-    <menuitem name="Configuración" id="managment_obt_bi.menu_obt_config" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"/>
+    <menuitem name="Traslados o Movimientos de Terneros" id="managment_obt_bi.menu_obt_tr_transfer" parent="managment_obt_bi.obt_oper1"  action="managment_obt_bi.action_managment_tranfer" sequence="4"/>
+
+    <menuitem name="Gastos Directos de Ternera" id="managment_obt_bi.menu_obt_tr_expenses_cow" parent="managment_obt_bi.obt_oper1"  action="managment_obt_bi.action_tracing_expenses_cow"  sequence="5"/>
+
+    <menuitem name="Gastos Generales Empresa" id="managment_obt_bi.menu_obt_tr_expenses_company" parent="managment_obt_bi.obt_oper1"  action="managment_obt_bi.action_tracing_expenses_company"  sequence="6"/>
+
+    <menuitem name="Clientes" id="managment_obt_bi.menu_obt_clientes" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"  sequence="3"/>
+    <menuitem name="Proveedores" id="managment_obt_bi.menu_obt_proveedores" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"  sequence="4"/>
+
+    <menuitem name="Informes" id="managment_obt_bi.menu_obt_informes" parent="managment_obt_bi.menu_obt_root" sequence="5"/>
+
+    <menuitem name="Configuración" id="managment_obt_bi.menu_obt_config" parent="managment_obt_bi.menu_obt_root" action="contacts.action_contacts"  sequence="6"/>
 
     <!-- actions -->
     <menuitem name="Segumiento" id="managment_obt_bi.menu_list_informe_1" parent="managment_obt_bi.menu_obt_informes"
@@ -392,7 +635,7 @@
               action="managment_obt_bi.action_informe_weight"/>
 
 
-    <menuitem name="Clase Unidades de Negocio" id="managment_obt_bi.menu_list_config_clase" parent="managment_obt_bi.menu_obt_config"
+   <menuitem name="Clase Unidades de Negocio" id="managment_obt_bi.menu_list_config_clase" parent="managment_obt_bi.menu_obt_config"
               action="managment_obt_bi.managment_obt_bi_unidades_negocio_clase"/>
   
    <menuitem name="Sub Clase Unidades de Negocio" id="managment_obt_bi.menu_list_config_sub_clase" parent="managment_obt_bi.menu_obt_config"
@@ -400,6 +643,12 @@
 
    <menuitem name="Categoria Unidades de Negocio" id="managment_obt_bi.menu_list_config_categoria" parent="managment_obt_bi.menu_obt_config"
               action="managment_obt_bi.managment_obt_bi_unidades_negocio_categoria"/>
+
+   <menuitem name="Gastos " id="managment_obt_bi.menu_list_config_gatos" parent="managment_obt_bi.menu_obt_config"
+              action="managment_obt_bi.managment_obt_bi_gastos_act"/>
+
+   <menuitem name="Tipos de Gastos" id="managment_obt_bi.menu_list_config_type_gatos" parent="managment_obt_bi.menu_obt_config"
+              action="managment_obt_bi.managment_obt_bi_gastos_type_act"/>
   
   
     

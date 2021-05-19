@@ -2,17 +2,7 @@
 <odoo>
     <data noupdate="0">
 
-     	<record id="tern_001" model="managment_obt_bi_cow">
-            <field name="name">DEMO TER-001</field>
-            <field name="number">0000001</field>
-        </record>
-        <record id="tern_002" model="managment_obt_bi_cow">
-            <field name="name">DEMO TER-002</field>
-            <field name="number">0000002</field>
-        </record>
-        <record id="tern_003" model="managment_obt_bi_cow">
-            <field name="name">DEMO TER-003</field>
-            <field name="number">0000003</field>
-        </record>
+     	
+        
     </data>
 </odoo>
